@@ -16,24 +16,14 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum SystemEnvironmentEnum implements BaseEnum {
-    /**
-     * dev
-     */
-    DEV(SystemEnvironmentNameConst.DEV, "开发环境"),
 
-    /**
-     * test
-     */
-    TEST(SystemEnvironmentNameConst.TEST, "测试环境"),
+    /** 本机环境，对应 Maven local 和 resources/local。 */
+    LOCAL(SystemEnvironmentNameConst.LOCAL, "本机环境"),
 
-    /**
-     * pre
-     */
-    PRE(SystemEnvironmentNameConst.PRE, "预发布环境"),
+    /** 测试环境，按照本项目约定统一命名为 dev。 */
+    DEV(SystemEnvironmentNameConst.DEV, "测试环境"),
 
-    /**
-     * prod
-     */
+    /** 生产环境。 */
     PROD(SystemEnvironmentNameConst.PROD, "生产环境");
 
     private final String value;
@@ -41,10 +31,10 @@ public enum SystemEnvironmentEnum implements BaseEnum {
     private final String desc;
 
     public static final class SystemEnvironmentNameConst {
+
+        // 字符串必须与 Maven profile、配置目录名称完全一致。
+        public static final String LOCAL = "local";
         public static final String DEV = "dev";
-        public static final String TEST = "test";
-        public static final String PRE = "pre";
         public static final String PROD = "prod";
     }
-
 }

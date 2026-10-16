@@ -1,10 +1,10 @@
 spring:
   # 数据库连接信息
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/smart_admin_v3?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
-    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:p6spy:mysql://127.0.0.1:3306/smart_admin_v3?autoReconnect=true&useServerPreparedStmts=false&rewriteBatchedStatements=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&serverTimezone=Asia/Shanghai
     username: root
-    password: 123456
+    password: SmartAdmin666
+    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     initial-size: 2
     min-idle: 2
     max-active: 10
@@ -99,8 +99,7 @@ file:
   storage:
     mode: local
     local:
-      #文件上传目录
-      upload-path:  ${user.home}/smart-admin/uploads/
+      upload-path: /home/smart_admin_v3/upload/   #文件上传目录
       url-prefix:
     cloud:
       region: oss-cn-hangzhou

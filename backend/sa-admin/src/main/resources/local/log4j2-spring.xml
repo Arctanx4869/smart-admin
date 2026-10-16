@@ -10,7 +10,8 @@
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
             <ThresholdFilter level="info" onMatch="ACCEPT" onMismatch="DENY"/>
-            <PatternLayout pattern="[%d][%-5p][%t][%c{1.}:%L] %m %n"/>
+            <PatternLayout pattern="[%blue{%d}][%highlight{%-5p}][%t][%cyan{%c{1.}:%L}] %m %n"
+                           disableAnsi="false" noConsoleNoAnsi="false"/>
         </Console>
         <RollingFile name="debug" fileName="${log-directory}/debug/debug.log"
                      filePattern="${log-directory}/debug/debug-%d{yyyy-MM-dd}-%i.log">
@@ -101,12 +102,10 @@
     </Appenders>
 
     <Loggers>
-
         <logger name="com.alibaba.druid.filter.stat.StatFilter" level="ERROR" additivity="false">
             <AppenderRef ref="druidSlowSqlLog"/>
         </logger>
-
-        <Root level="info">
+        <Root level="debug">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="debug"/>
             <AppenderRef ref="info"/>

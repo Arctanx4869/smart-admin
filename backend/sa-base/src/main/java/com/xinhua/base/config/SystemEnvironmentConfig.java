@@ -34,15 +34,15 @@ public class SystemEnvironmentConfig implements Condition {
      */
     @Override
     public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata annotatedTypeMetadata) {
-        return isDevOrTest(conditionContext);
+        return isLocalOrDev(conditionContext);
     }
 
-    /**
-     * 是否为：开发环境和 测试环境
-     */
-    private boolean isDevOrTest(ConditionContext conditionContext) {
+    private boolean isLocalOrDev(ConditionContext conditionContext) {
         String property = conditionContext.getEnvironment().getProperty("spring.profiles.active");
-        return StringUtils.isNotBlank(property) && (SystemEnvironmentEnum.TEST.equalsValue(property) || SystemEnvironmentEnum.DEV.equalsValue(property));
+
+        return StringUtils.isNotBlank(property)
+                && (SystemEnvironmentEnum.LOCAL.equalsValue(property)
+                || SystemEnvironmentEnum.DEV.equalsValue(property));
     }
 
     @Bean("systemEnvironment")
