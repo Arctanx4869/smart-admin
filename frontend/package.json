@@ -1,19 +1,10 @@
 {
   "name": "smartadmin",
-  "version": "3.0.0",
-  "author": {
-    "name": "1024创新实验室（1024lab）",
-    "email": "lab1024@163.com",
-    "url": "https://www.1024lab.net"
-  },
-  "license": "MIT",
-  "homepage": "https://smartadmin.1024lab.net",
+  "version": "1.0.0",
   "scripts": {
-    "localhost": "vite --mode localhost",
     "dev": "vite",
-    "build:test": "vite build  --base=/admin/ --mode test",
-    "build:pre": "vite build  --mode pre",
-    "build:prod": "vite build  --mode production"
+    "build:dev": "vite build --mode dev",
+    "build:prod": "vite build --mode prod"
   },
   "type": "module",
   "dependencies": {
@@ -43,7 +34,8 @@
     "vue": "3.4.27",
     "vue-i18n": "9.13.1",
     "vue-router": "4.3.2",
-    "vue3-json-viewer": "2.3.1"
+    "vue3-json-viewer": "2.3.1",
+    "vue3-lottie": "^3.3.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "5.0.4",
