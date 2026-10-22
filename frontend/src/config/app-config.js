@@ -1,12 +1,3 @@
-/*
- * 应用默认配置
- *
- * @Author:    1024创新实验室-主任：卓大
- * @Date:      2022-09-03 22:07:01
- * @Wechat:    zhuda1024
- * @Email:     lab1024@163.com
- * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
- */
 export const appDefaultConfig = {
   // i18n 语言选择
   language: 'zh_CN',
@@ -43,9 +34,40 @@ export const appDefaultConfig = {
   // 水印
   watermarkFlag: true,
   // 网站名称
-  websiteName: 'SmartAdmin 3.X',
+  websiteName: '智能综合办公系统',
   // 主题颜色
   primaryColor: '#1677ff',
   // 紧凑
   compactFlag: false,
+};
+
+// 新增：侧栏独立配色，供侧栏布局使用。
+export const sidebarTheme = {
+  token: {
+    // 覆盖浅色侧栏容器；不影响配置范围以外的内容区。
+    colorBgContainer: '#3490DC',
+    colorText: '#FFFFFF',
+  },
+  components: {
+    Layout: {
+      // 深色侧栏背景和底部折叠按钮背景。
+      colorBgHeader: '#3490DC',
+      colorBgTrigger: '#3490DC',
+    },
+    Menu: {
+      // 菜单主体、展开的子菜单及弹出菜单使用统一底色。
+      colorItemBg: '#3490DC',
+      colorSubItemBg: '#3490DC',
+
+      // 普通、悬停和选中的菜单文字使用白色。
+      colorItemText: '#FFFFFF',
+      colorItemTextHover: '#FFFFFF',
+      colorItemTextSelected: '#FFFFFF',
+      colorGroupTitle: '#FFFFFF',
+
+      // 用透明底色区分悬停和选中状态。
+      colorItemBgHover: 'rgba(255, 255, 255, 0.12)',
+      colorItemBgSelected: 'rgba(0, 0, 0, 0.18)',
+    },
+  },
 };

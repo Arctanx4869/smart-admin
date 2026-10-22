@@ -35,15 +35,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-/**
- * 员工 service
- *
- * @Author 1024创新实验室-主任: 卓大
- * @Date 2021-12-29 21:52:46
- * @Wechat zhuoda1024
- * @Email lab1024@163.com
- * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
- */
 @Service
 public class EmployeeService {
 
@@ -355,27 +346,12 @@ public class EmployeeService {
             return ResponseDTO.userErrorParam("新密码与原始密码相同，请重新输入");
         }
 
-        // 校验密码复杂度
-        ResponseDTO<String> validatePassComplexity = securityPasswordService.validatePasswordComplexity(updatePasswordForm.getNewPassword());
-        if (!validatePassComplexity.getOk()) {
-            return validatePassComplexity;
-        }
-
-        // 根据三级等保规则，校验密码是否重复
-        ResponseDTO<String> passwordRepeatTimes = securityPasswordService.validatePasswordRepeatTimes(requestUser, this.generateSaltPassword(updatePasswordForm.getNewPassword(), employeeEntity.getEmployeeUid()));
-        if (!passwordRepeatTimes.getOk()) {
-            return ResponseDTO.error(passwordRepeatTimes);
-        }
-
         // 更新密码
         String newEncryptPassword = SecurityPasswordService.getEncryptPwd(this.generateSaltPassword(updatePasswordForm.getNewPassword(), employeeEntity.getEmployeeUid()));
         EmployeeEntity updateEntity = new EmployeeEntity();
         updateEntity.setEmployeeId(employeeId);
         updateEntity.setLoginPwd(newEncryptPassword);
         employeeDao.updateById(updateEntity);
-
-        // 保存修改密码密码记录
-        securityPasswordService.saveUserChangePasswordLog(requestUser, newEncryptPassword, employeeEntity.getLoginPwd());
 
         return ResponseDTO.ok();
     }

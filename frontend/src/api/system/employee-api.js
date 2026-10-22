@@ -1,14 +1,4 @@
-/*
- *  员工
- *
- * @Author:    1024创新实验室-主任：卓大
- * @Date:      2022-09-03 21:59:15
- * @Wechat:    zhuda1024
- * @Email:     lab1024@163.com
- * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
- */
-
-import { getRequest, postEncryptRequest, postRequest } from '/@/lib/axios';
+import { getRequest, postRequest } from '/@/lib/axios';
 
 export const employeeApi = {
   /**
@@ -75,13 +65,7 @@ export const employeeApi = {
    * 修改密码
    */
   updateEmployeePassword: (param) => {
-    return postEncryptRequest('/employee/update/password', param);
-  },
-  /**
-   * 获取密码复杂度
-   */
-  getPasswordComplexityEnabled: () => {
-    return getRequest('/employee/getPasswordComplexityEnabled');
+    return postRequest('/employee/update/password', param);
   },
   /**
    * 更新员工禁用状态

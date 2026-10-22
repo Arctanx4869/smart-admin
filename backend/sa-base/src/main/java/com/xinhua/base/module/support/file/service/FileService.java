@@ -19,8 +19,6 @@ import com.xinhua.base.module.support.file.domain.form.FileQueryForm;
 import com.xinhua.base.module.support.file.domain.vo.FileDownloadVO;
 import com.xinhua.base.module.support.file.domain.vo.FileUploadVO;
 import com.xinhua.base.module.support.file.domain.vo.FileVO;
-import com.xinhua.base.module.support.redis.RedisService;
-import com.xinhua.base.module.support.securityprotect.service.SecurityFileService;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -32,15 +30,6 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-/**
- * 文件服务
- *
- * @Author 1024创新实验室: 罗伊
- * @Date 2019年10月11日 15:34:47
- * @Wechat zhuoda1024
- * @Email lab1024@163.com
- * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
- */
 @Service
 public class FileService {
 
@@ -54,9 +43,6 @@ public class FileService {
 
     @Resource
     private FileDao fileDao;
-
-    @Resource
-    private SecurityFileService securityFileService;
 
     /**
      * 文件上传服务
@@ -83,12 +69,6 @@ public class FileService {
 
         if (originalFilename.length() > FILE_NAME_MAX_LENGTH) {
             return ResponseDTO.userErrorParam("文件名称最大长度为：" + FILE_NAME_MAX_LENGTH);
-        }
-
-        // 校验文件大小以及安全性
-        ResponseDTO<String> validateFile = securityFileService.checkFile(file);
-        if (!validateFile.getOk()) {
-            return ResponseDTO.error(validateFile);
         }
 
         // 进行上传

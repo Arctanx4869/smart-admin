@@ -2,6 +2,7 @@ package com.xinhua.admin.module.system.employee.domain.form;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 /**
@@ -25,5 +26,6 @@ public class EmployeeUpdatePasswordForm {
 
     @Schema(description = "新密码")
     @NotBlank(message = "新密码不能为空哦")
+    @Size(min = 8, message = "密码长度至少8位")
     private String newPassword;
 }

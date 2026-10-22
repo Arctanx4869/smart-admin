@@ -67,7 +67,6 @@ public class AdminInterceptor implements HandlerInterceptor {
             Method method = ((HandlerMethod) handler).getMethod();
             NoNeedLogin noNeedLogin = ((HandlerMethod) handler).getMethodAnnotation(NoNeedLogin.class);
             if (noNeedLogin != null) {
-                updateActiveTimeout(requestEmployee);
                 SmartRequestUtil.setRequestUser(requestEmployee);
                 return true;
             }
@@ -76,9 +75,6 @@ public class AdminInterceptor implements HandlerInterceptor {
                 SmartResponseUtil.write(response, ResponseDTO.error(UserErrorCode.LOGIN_STATE_INVALID));
                 return false;
             }
-
-            // 更新活跃
-            updateActiveTimeout(requestEmployee);
 
 
             // --------------- 第三步： 校验 权限 ---------------
@@ -103,9 +99,7 @@ public class AdminInterceptor implements HandlerInterceptor {
             int code = e.getCode();
             if (code == 11041 || code == 11051) {
                 SmartResponseUtil.write(response, ResponseDTO.error(UserErrorCode.NO_PERMISSION));
-            } else if (code == 11016) {
-                SmartResponseUtil.write(response, ResponseDTO.error(UserErrorCode.LOGIN_ACTIVE_TIMEOUT));
-            } else if (code >= 11011 && code <= 11015) {
+            } else if (code == 11016 || (code >= 11011 && code <= 11015)) {
                 SmartResponseUtil.write(response, ResponseDTO.error(UserErrorCode.LOGIN_STATE_INVALID));
             } else {
                 SmartResponseUtil.write(response, ResponseDTO.error(UserErrorCode.PARAM_ERROR));
@@ -120,18 +114,6 @@ public class AdminInterceptor implements HandlerInterceptor {
         // 通过验证
         return true;
     }
-
-
-    /**
-     * 更新活跃时间
-     */
-    private void updateActiveTimeout(RequestEmployee requestEmployee) {
-        if (requestEmployee == null) {
-            return;
-        }
-        StpUtil.updateLastActiveToNow();
-    }
-
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {

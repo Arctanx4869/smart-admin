@@ -1,18 +1,7 @@
-/*
- *  ajax请求
- *
- * @Author:    1024创新实验室-主任：卓大
- * @Date:      2022-09-06 20:46:03
- * @Wechat:    zhuda1024
- * @Email:     lab1024@163.com
- * @Copyright  1024创新实验室 （ https://1024lab.net ），Since 2012
- */
-import { message, Modal } from 'ant-design-vue';
+import { message, } from 'ant-design-vue';
 import axios from 'axios';
 import { localRead } from '/@/utils/local-util';
 import { useUserStore } from '/@/store/modules/system/user';
-import { decryptData, encryptData } from './encrypt';
-import { DATA_TYPE_ENUM } from '../constants/common-const';
 import _ from 'lodash';
 import LocalStorageKeyConst from '/@/constants/local-storage-key-const';
 
@@ -65,15 +54,6 @@ smartAxios.interceptors.response.use(
       return Promise.reject(response.data);
     }
 
-    // 如果是加密数据
-    if (response.data.dataType === DATA_TYPE_ENUM.ENCRYPT.value) {
-      response.data.encryptData = response.data.data;
-      let decryptStr = decryptData(response.data.data);
-      if (decryptStr) {
-        response.data.data = JSON.parse(decryptStr);
-      }
-    }
-
     const res = response.data;
     if (res.code && res.code !== 1) {
       // `token` 过期或者账号已在别处登录
@@ -84,25 +64,6 @@ smartAxios.interceptors.response.use(
         return Promise.reject(response);
       }
 
-      // 等保安全的登录提醒
-      if (res.code === 30010 || res.code === 30011) {
-        Modal.error({
-          title: '重要提醒',
-          content: res.msg,
-        });
-        return Promise.reject(response);
-      }
-
-      // 长时间未操作系统，需要重新登录
-      if (res.code === 30012) {
-        Modal.error({
-          title: '重要提醒',
-          content: res.msg,
-          onOk: logout,
-        });
-        setTimeout(logout, 3000);
-        return Promise.reject(response);
-      }
       message.destroy();
       message.error(res.msg);
       return Promise.reject(response);
@@ -149,19 +110,6 @@ export const request = (config) => {
 export const postRequest = (url, data) => {
   return request({
     data,
-    url,
-    method: 'post',
-  });
-};
-
-// ================================= 加密 =================================
-
-/**
- * 加密请求参数的post请求
- */
-export const postEncryptRequest = (url, data) => {
-  return request({
-    data: { encryptData: encryptData(data) },
     url,
     method: 'post',
   });

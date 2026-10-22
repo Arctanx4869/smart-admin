@@ -5,54 +5,19 @@ import cn.dev33.satoken.annotation.SaCheckRole;
 import cn.dev33.satoken.annotation.SaMode;
 import io.swagger.v3.oas.models.Operation;
 import com.xinhua.base.common.util.SmartStringUtil;
-import com.xinhua.base.module.support.apiencrypt.annotation.ApiDecrypt;
-import com.xinhua.base.module.support.apiencrypt.annotation.ApiEncrypt;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.web.method.HandlerMethod;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 权限、接口加解密等
- *
- * @Author 1024创新实验室-主任:卓大
- * @Date 2023/12/26 13:47:39
- * @Wechat zhuoda1024
- * @Email lab1024@163.com
- * @Copyright <a href="https://1024lab.net">1024创新实验室</a>
- */
-
 public class SmartOperationCustomizer implements OperationCustomizer {
 
     @Override
     public Operation customize(Operation operation, HandlerMethod handlerMethod) {
-
         List<String> noteList = new ArrayList<>();
-
-        // 请求参数加密
-        List<String> encryptBuilderList = new ArrayList<>();
-
-        if (handlerMethod.getMethodAnnotation(ApiDecrypt.class) != null ||
-                handlerMethod.getBeanType().getAnnotation(ApiDecrypt.class) != null) {
-            encryptBuilderList.add("【请求参数加密】");
-        }
-
-        if (handlerMethod.getMethodAnnotation(ApiEncrypt.class) != null ||
-                handlerMethod.getBeanType().getAnnotation(ApiEncrypt.class) != null) {
-            encryptBuilderList.add("【返回结果加密】");
-        }
-
-        if (!encryptBuilderList.isEmpty()) {
-            noteList.add("<br/><font style=\"color:red\" class=\"light-red\">接口安全：" + SmartStringUtil.join(",", encryptBuilderList) + "</font>");
-        }
-
-        // 权限
         noteList.addAll(getPermission(handlerMethod));
-
-        // 更新
         operation.setDescription(SmartStringUtil.join("<br/>", noteList));
-
         return operation;
     }
 

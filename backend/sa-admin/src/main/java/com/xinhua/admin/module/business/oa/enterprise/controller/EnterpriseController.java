@@ -1,6 +1,7 @@
 package com.xinhua.admin.module.business.oa.enterprise.controller;
 
 import cn.dev33.satoken.annotation.SaCheckPermission;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
@@ -20,7 +21,6 @@ import com.xinhua.base.common.domain.RequestUser;
 import com.xinhua.base.common.domain.ResponseDTO;
 import com.xinhua.base.common.util.*;
 import com.xinhua.base.module.support.operatelog.annotation.OperateLog;
-import org.apache.commons.collections.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;

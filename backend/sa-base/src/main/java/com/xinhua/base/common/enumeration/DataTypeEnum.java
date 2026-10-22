@@ -20,10 +20,7 @@ public enum DataTypeEnum implements BaseEnum {
      */
     NORMAL(1, "普通数据"),
 
-    /**
-     * 加密数据
-     */
-    ENCRYPT(10, "加密数据"),
+
     ;
     private final Integer value;
 

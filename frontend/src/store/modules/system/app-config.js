@@ -21,7 +21,11 @@ let appConfigStr = localRead(localStorageKeyConst.APP_CONFIG);
 let language = appDefaultConfig.language;
 if (appConfigStr) {
   try {
-    state = JSON.parse(appConfigStr);
+    state = {
+      ...appDefaultConfig,
+      ...JSON.parse(appConfigStr),
+      websiteName: appDefaultConfig.websiteName,
+    };
     language = state.language;
   } catch (e) {
     smartSentry.captureError(e);
