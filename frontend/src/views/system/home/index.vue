@@ -9,79 +9,50 @@
   *
 -->
 <template>
-  <!--  顶部用户信息-->
-  <a-row>
-    <HomeHeader />
-  </a-row>
-  <!--下方左右布局-->
-  <a-row :gutter="[10, 10]">
-    <!--左侧-->
-    <a-col :span="16">
-      <a-row :gutter="[10, 10]">
-        <!--公告信息-->
-        <a-col :span="12">
-          <HomeNotice title="公告" :noticeTypeId="1" />
-        </a-col>
-        <!--企业动态-->
-        <a-col :span="12">
-          <HomeNotice title="通知" :noticeTypeId="2" />
-        </a-col>
-        <!--各类报表-->
-        <!-- <a-col :span="6">
-          <Gauge :percent="saleTargetPercent" />
-        </a-col> -->
-        <a-col :span="12">
-          <Pie />
-        </a-col>
-        <a-col :span="12">
-          <Category />
-        </a-col>
-        <a-col :span="24">
-          <Gradient />
-        </a-col>
-      </a-row>
-    </a-col>
-    <!--右侧-->
-    <a-col :span="8">
-      <a-row :gutter="[10, 10]">
-        <!--快捷入口-->
-        <!-- <a-col :span="24">
-          <HomeQuickEntry />
-        </a-col> -->
-        <!--关注公众号-->
-        <a-col :span="24">
-          <OfficialAccountCard />
-        </a-col>
-        <!--更新日志-->
-        <a-col :span="24">
-          <ChangelogCard />
-        </a-col>
-        <!--待办、已办-->
-        <a-col :span="24">
-          <ToBeDoneCard />
-        </a-col>
-      </a-row>
-    </a-col>
-<!--    <AdModal/>-->
-  </a-row>
-</template>
-<script setup>
-  import { computed } from 'vue';
-  import HomeHeader from './home-header.vue';
-  import HomeNotice from './home-notice.vue';
-  import OfficialAccountCard from './components/official-account-card.vue';
-  import ToBeDoneCard from './components/to-be-done-card/home-to-be-done.vue';
-  import ChangelogCard from './components/changelog-card.vue';
-  import Category from './components/echarts/category.vue';
-  import Pie from './components/echarts/pie.vue';
-  import Gradient from './components/echarts/gradient.vue';
-  // import AdModal from './ad-modal.vue';
+  <div class="preview-home">
+    <!-- 静态预览：替换登录用户信息和天气 iframe。 -->
+    <a-card title="首页" style="margin-bottom: 10px">
+      欢迎访问智能综合办公系统。下方图表使用本地示例数据。
+    </a-card>
 
-  // 业绩完成百分比
-  const saleTargetPercent = computed(() => {
-    return 75;
-  });
+    <a-row :gutter="[10, 10]">
+      <!-- 静态预览：保留页面区域，不挂载原来的公告和日志查询组件。 -->
+      <a-col :xs="24" :lg="12">
+        <a-card title="公告">
+          <a-empty description="暂无内容" />
+        </a-card>
+      </a-col>
+
+      <a-col :xs="24" :lg="12">
+        <a-card title="更新日志">
+          <a-empty description="暂无内容" />
+        </a-card>
+      </a-col>
+
+      <!-- 保留已有图表；数据来自组件内部，不请求后台。 -->
+      <a-col :xs="24" :lg="12">
+        <Pie />
+      </a-col>
+      <a-col :xs="24" :lg="12">
+        <Category />
+      </a-col>
+      <a-col :span="24">
+        <Gradient />
+      </a-col>
+    </a-row>
+  </div>
+</template>
+
+<script setup>
+import Pie from './components/echarts/pie.vue';
+import Category from './components/echarts/category.vue';
+import Gradient from './components/echarts/gradient.vue';
 </script>
-<style lang="less" scoped>
-  @import './index.less';
+
+<style scoped>
+/* 内容区独立滚动，避免首页内容超出布局后无法查看。 */
+.preview-home {
+  height: 100%;
+  overflow: auto;
+}
 </style>

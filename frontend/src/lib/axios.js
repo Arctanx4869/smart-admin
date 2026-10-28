@@ -101,7 +101,12 @@ export const getRequest = (url, params) => {
  * @param config
  */
 export const request = (config) => {
-  return smartAxios.request(config);
+  // 静态预览：禁止通过公共封装访问后台。
+  // 后续即使误引入旧组件，也不会真的发出这些接口请求。
+  // 返回失败，避免新增、删除等操作被误认为已经保存成功。
+  return Promise.reject(
+    new Error('当前为页面预览，后台接口尚未接入')
+  );
 };
 
 /**
